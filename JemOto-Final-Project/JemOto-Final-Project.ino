@@ -20,97 +20,146 @@ WiFiClientSecure secured_client;
 UniversalTelegramBot bot(BOT_TOKEN, secured_client);
 
 // Inisialisasi servo
+static const int servoPin = 2;  // pin servo di D4 atau GPIO2
 Servo myservo; 
-int masukkan = 0;
-int keluarkan = 90;
+int kondisi = 0;
+int sudut = 0;
+int sudut_min = 0;
+int sudut_max = 160;
+int sudut_step = 2;
+String pos_jemuran;
 
 // Inisialisasi DHT 11
 #define DHTPIN 15 // pin dht11 di D8 atau GPIO15
 #define DHTTYPE DHT11 // tipe DHT 11
 DHT dht(DHTPIN, DHTTYPE);
-float t;
+String temp;
 
 // Inisialisasi LDR sensor
 #define LDRPIN A0 //pin LDR sensor di A0
 int ldr;
+String intensitas;
+String cahaya;
 
 // Inisialisasi sensor hujan
-#define sensorHujan 5 // pin sensor hujan di S3 atau GPIO10
+#define sensorHujan 14 // pin sensor hujan di D5 atau GPIO14
 int dataAir;
+String cuaca;
 
 // Inisialisasi buzzer
 #define buzzer 4 // pin buzzer di D2 atau GPO4
+
+void keluarkan_jemuran(){
+  if(kondisi == 0){
+    for(sudut = 0; sudut <= sudut_max; sudut += sudut_step){
+      myservo.write(sudut);
+      delay(50);
+      kondisi = 1;
+    }
+  }
+}
+
+void masukkan_jemuran(){
+  if(kondisi == 1){
+    for(sudut = 160; sudut >= sudut_min; sudut -= sudut_step){
+      myservo.write(sudut);
+      delay(50);
+      kondisi = 0;
+    }
+  }
+}
+
+void cek_temperature(){
+  float t = dht.readTemperature()-2;
+  temp = "Suhu saat ini : ";
+  temp += (t);
+  temp +=" °C\n";
+}
+
+void cek_intensitas_cahaya(){
+  ldr = analogRead(LDRPIN);
+  intensitas = "Intensitas cahaya : ";
+  intensitas += (ldr);
+  if (ldr <= 120) {
+    cahaya = " (Terang)";
+  } else {
+    cahaya = " (Gelap)";
+  }
+}
+
+void cek_cuaca(){
+  dataAir = digitalRead(sensorHujan);
+  if (dataAir == LOW) {
+    cuaca = "Hujan";
+  } else { 
+    cuaca = "Tidak Hujan";
+  }
+}
+
+void cek_pos_jemuran(){
+  if (myservo.read() == sudut_min){
+    pos_jemuran = "Jemuran di dalam";
+  } else if (myservo.read() == sudut_max){
+    pos_jemuran = "Jemuran di luar";
+  }
+}
+
+void buzzer_on(){
+  digitalWrite(buzzer, HIGH);
+  delay(500);
+  digitalWrite(buzzer, LOW);
+  delay(500);
+}
+
+void jalankan_otomatis(){
+  // jika hujan
+  if (dataAir == LOW){
+    buzzer_on();
+  }
+  //jika tidak hujan dan intensitas <= 120 (terang)
+  if ((dataAir == HIGH) && (ldr <= 120)) { 
+    keluarkan_jemuran();
+  }
+    //jika hujan dan intensitas >= 120 (gelap)
+  else {
+    masukkan_jemuran();
+  }
+}
+
 void handleNewMessages(int numNewMessages)
 {
+  String answer;
   Serial.print("handleNewMessages ");
   Serial.println(numNewMessages);
-
-  myservo.attach(2); // pin servo di D4 atau GPIO2
-  
-  String answer;
-  String temp;
-  String cahaya;
-  String intensitas;
-  String cuaca;
-  String pos_jemuran;
   
   for (int i = 0; i < numNewMessages; i++)
   {
     telegramMessage &msg = bot.messages[i];
     Serial.println("Received " + msg.text);
     if (msg.text == "/start"){
+      myservo.write(sudut);
       answer = "Selamat datang *" + msg.from_name + "* di JemOto (Jemuran Otomatis), silahkan gunakan perintah /bantuan untuk melanjutkan! :)";      
     }
     else if (msg.text == "/masukkan"){
-      myservo.write(masukkan);
-      digitalWrite(buzzer, HIGH);
-      delay(1000);
-      digitalWrite(buzzer, LOW);
+      buzzer_on();
+      masukkan_jemuran();
+      buzzer_on();
       answer = "Jemuran telah dimasukkan";
     }
     else if (msg.text == "/keluarkan"){
-      myservo.write(keluarkan);
-      digitalWrite(buzzer, HIGH);
-      delay(1000);
-      digitalWrite(buzzer, LOW);
+      buzzer_on();
+      keluarkan_jemuran();
+      buzzer_on();
       answer = "Jemuran telah dikeluarkan";
     }
     else if (msg.text == "/info"){
-      // Cek temperature
-      t = dht.readTemperature()-2;
-      temp = "Suhu saat ini : ";
-      temp += (t);
-      temp +=" °C\n";
-
-      // Cek intensitas cahaya
-      ldr = analogRead(LDRPIN);
-      cahaya = "Intensitas cahaya : ";
-      cahaya += (ldr);
-      if (ldr <= 120) {
-        intensitas = " (Terang)"; 
-      }
-      else {
-        intensitas = " (Gelap)";
-      }
-
-      // Cek hujan 
-      dataAir = digitalRead(sensorHujan);
-      if (dataAir == LOW) {
-        cuaca = "Hujan";
-      }
-      else { 
-        cuaca = "Tidak Hujan";
-      }
-
-      // Cek posisi jemuran
-      if (myservo.read() == masukkan){
-        pos_jemuran = "Jemuran di dalam";
-      } else if (myservo.read() == keluarkan){
-        pos_jemuran = "Jemuran di luar";
-      }
+      cek_temperature();
+      cek_intensitas_cahaya();
+      cek_cuaca();
+      cek_pos_jemuran();
 
       bot.sendMessage(msg.chat_id, temp, "");
-      bot.sendMessage(msg.chat_id, cahaya + intensitas, "");
+      bot.sendMessage(msg.chat_id, intensitas + cahaya, "");
       bot.sendMessage(msg.chat_id, cuaca, "");
       bot.sendMessage(msg.chat_id, pos_jemuran, "");
       answer = "Itu saja informasi yang dapat diberikan untuk sekarang";
@@ -149,6 +198,7 @@ void setup()
   pinMode(LDRPIN, INPUT);
   pinMode(sensorHujan, INPUT);
   pinMode(buzzer, OUTPUT);
+  myservo.attach(servoPin);
 
   // attempt to connect to Wifi network:
   configTime(0, 0, "pool.ntp.org");      // get UTC time via NTP
@@ -195,24 +245,8 @@ void loop()
 
     bot_lasttime = millis();
   } 
-
   ldr = analogRead(LDRPIN);
-  dataAir = digitalRead(sensorHujan); 
-
-  if ((dataAir == HIGH) && (ldr <= 120)) {
-    myservo.write(keluarkan);
-    digitalWrite(buzzer, LOW);
-  }
-  else { 
-    myservo.write(masukkan);
-    digitalWrite(buzzer, LOW);
-  }
-  if (dataAir == LOW){
-    myservo.write(masukkan);
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
-    delay(1000);
-  }
-  delay(1000);
+  dataAir = digitalRead(sensorHujan);
+  
+  jalankan_otomatis();
 }
