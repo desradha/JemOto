@@ -14,3 +14,9 @@ Adapun ensor-sensor dan tambahan yang digunakan sebagai berikut.
 4. Micro Servo SG90 
 5. Passive Buzzer 
 6. Telegram Bot dari botfather
+
+# Referensi
+[1] Muhammad Robith Adani, “Mengenal Apa Itu Internet of Things dan Contoh Penerapannya,” Sekawan Media. p. 1, 2020, [Online]. Available: https://www.sekawanmedia.co.id/pengertian-internet-of-things/. <br />
+[2] S. Wasista, Setiawardhana, D. A. Saraswati, and E. Susanto, Aplikasi Internet of Things (IoT) dengan ARDUINO dan ANDROID. Yogyakarta: CV BUDI UTAMA, 2019. <br />
+[3] M. V. Overbeek, “Internet of Things (IoT) dalam Bidang Informatika,” Universitas Multimedia Nusantara. [Online]. Available: https://www.umn.ac.id/internet-things-iot-dalam-bidang-informatika/. <br />
+[4] R. L. Kahimpong, M. Umboh, and B. Maluegha, “Rancang Bangun Prototipe Penjemur Pakaian Otomatis Berbasis Mikrokontroler Arduino Uno,” Ubiquitous Comput. its Appl. J., vol. 6, pp. 41–54, 2018, doi: 10.51804/ucaiaj.v1i1.41-54
