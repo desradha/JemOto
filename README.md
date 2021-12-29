@@ -4,6 +4,8 @@
 3. Nazel Marfi Alfawwaz (14116012)
 4. Ahmad Rosyid Al Khairi (14116062)
 
+*Link Overleaf : https://www.overleaf.com/read/sppdbrzydzcq
+
 # JemOto
 JemOto (Jemuran Otomatis) merupakan prototype sebagai tugas besar untuk memenuhi matakuliah sistem tertanam, program studi Teknik Informatika, Institut Teknologi Sumatera T.A. 2021. JemOto sendiri berfungsi sebagai jemuran otomatis dan dapat dikendalikan dengan menggunakan telegram bot.
 Penggunaan NodeMCU esp8266 v3 dalam pengembangannya untuk memungkinkan pemanfaatan Internet of Things agar dapat lebih memudahkan dalam kendali serta monitoring. <br />
