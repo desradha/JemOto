@@ -17,6 +17,9 @@ Adapun ensor-sensor dan tambahan yang digunakan sebagai berikut.
 5. Passive Buzzer 
 6. Telegram Bot dari botfather
 
+#Arsitektur Sistem
+![Arsitektur sistem](https://user-images.githubusercontent.com/49479754/147742630-15934219-bbf9-4c42-926f-72a93750bf8d.png)
+
 # Referensi
 [1] Muhammad Robith Adani, “Mengenal Apa Itu Internet of Things dan Contoh Penerapannya,” Sekawan Media. p. 1, 2020, [Online]. Available: https://www.sekawanmedia.co.id/pengertian-internet-of-things/. <br />
 [2] S. Wasista, Setiawardhana, D. A. Saraswati, and E. Susanto, Aplikasi Internet of Things (IoT) dengan ARDUINO dan ANDROID. Yogyakarta: CV BUDI UTAMA, 2019. <br />
