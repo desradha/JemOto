@@ -4,7 +4,7 @@
 3. Nazel Marfi Alfawwaz (14116012)
 4. Ahmad Rosyid Al Khairi (14116062)
 
-*Link Overleaf : https://www.overleaf.com/read/sppdbrzydzcq
+Link Overleaf : https://www.overleaf.com/read/sppdbrzydzcq
 
 # JemOto
 JemOto (Jemuran Otomatis) merupakan prototype sebagai tugas besar untuk memenuhi matakuliah sistem tertanam, program studi Teknik Informatika, Institut Teknologi Sumatera T.A. 2021. JemOto sendiri berfungsi sebagai jemuran otomatis dan dapat dikendalikan dengan menggunakan telegram bot.
@@ -17,7 +17,7 @@ Adapun ensor-sensor dan tambahan yang digunakan sebagai berikut.
 5. Passive Buzzer 
 6. Telegram Bot dari botfather
 
-#Arsitektur Sistem
+# Arsitektur Sistem
 ![Arsitektur sistem](https://user-images.githubusercontent.com/49479754/147742630-15934219-bbf9-4c42-926f-72a93750bf8d.png)
 
 # Referensi
