@@ -4,7 +4,7 @@
 3. Nazel Marfi Alfawwaz (14116012)
 4. Ahmad Rosyid Al Khairi (14116062)
 
-[Link Overleaf](https://www.overleaf.com/read/sppdbrzydzcq)
+Laporan Project dapat dilihat disini [Overleaf](https://www.overleaf.com/read/sppdbrzydzcq)
 
 
 # JemOto
@@ -20,6 +20,17 @@ Adapun sensor-sensor dan tambahan yang digunakan sebagai berikut.
 
 # Arsitektur Sistem
 ![Arsitektur sistem](https://user-images.githubusercontent.com/49479754/147742630-15934219-bbf9-4c42-926f-72a93750bf8d.png)
+
+Pada gambar Arsitektur Sistem terdapat beberapa komponen yang telah dikelompokkan. 
+1. Pertama ada NodeMCU Esp8266 sebagai inti dari sistem ini. 
+2. Kedua adalah input, komponen pada input terdiri dari dht11 merupakan sensor tambahan untuk mengecek suhu sekitar, ldr module untuk mengecek intensitas cahaya, dan raindrop sensor modul untuk mengecek cuaca. Ketiga sensor ini akan bekerja secara waktu nyata dan akan mengirimkan data yang telah ditangkap dan selanjutnya akan dikirim ke NodeMCU agar dapat diolah.
+3. Ketiga ada output, pada output ini terdapat 2 aktuator yang akan bekerja sesuai apa yang telah diperintahkan oleh NodeMCU. ada micro servo sg90 sebagai penggerak untuk memasukkan dan mengeluarkan jemuran dan passive buzzer sebagai suara tanda peringatan. 
+4. Dan yang terakhir ada media komunikasi, media komunikasi yang digunakan adalah telegram, penggunaan bot pada telegram akan memudahkan memonitoring dan mengendalikan JemOto
+
+# Video Demo Project
+[![Video Demo Project](https://img.youtube.com/vi/a9QlhMGlclo/0.jpg)](https://www.youtube.com/watch?v=a9QlhMGlclo) </br>
+
+Alternatif link video demo project : https://www.youtube.com/embed/a9QlhMGlclo
 
 # Referensi
 [1] Muhammad Robith Adani, “Mengenal Apa Itu Internet of Things dan Contoh Penerapannya,” Sekawan Media. p. 1, 2020, [Online]. Available: https://www.sekawanmedia.co.id/pengertian-internet-of-things/. <br />
